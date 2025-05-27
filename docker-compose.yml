@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_container
+    ports:
+      - "27018:27017" # Porta local 27018 mapeada para a porta 27017 no contêiner
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-scripts:/docker-entrypoint-initdb.d # Corrigido o path do volume
+    networks:
+      - mongo-network
+
+volumes:
+  mongodb_data: # Volume persistente para dados do MongoDB
+
+networks:
+  mongo-network: # Rede compartilhada entre os serviços
